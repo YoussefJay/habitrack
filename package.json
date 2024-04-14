@@ -1,0 +1,18 @@
+{
+  "name": "habitrack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "@supabase/supabase-js": "^2.42.3",
+    "express": "^4.19.2",
+    "faker": "^6.6.6",
+    "randomstring": "^1.3.0"
+  }
+}
