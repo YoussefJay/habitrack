@@ -173,7 +173,7 @@ app.get("/api/habits/view", verifySession, async (req, res) => {
   const { data: userData, error } = await supabase
     .from("users")
     .select("*")
-    .eq("user_id", userId);
+    .eq("user_id", user_id);
 
   if (error) {
     return res
@@ -189,7 +189,7 @@ app.get("/api/habits/view", verifySession, async (req, res) => {
   const { data: habits, error: habitError } = await supabase
     .from("habits")
     .select("*")
-    .eq("user_id", userId);
+    .eq("user_id", user_id);
 
   if (habitError) {
     return res
