@@ -303,7 +303,26 @@ app.get("/api/journal/entries", verifySession, async (req, res) => {
 app.put("/api/journal/edit/:entryId", verifySession, async (req, res) => {
   const { entryId } = req.params;
   const { entry_content } = req.body;
+  const loggedInUserId = req.user.id; // Assuming JWT stores user_id claim
 
+  // 1. Check entry ownership before update
+  const { data: entryData, error: entryError } = await supabase
+    .from("journal_entries")
+    .select("user_id") // Only fetch user_id for ownership check
+    .eq("entry_id", entryId)
+    .single();
+
+  if (entryError) {
+    return res
+      .status(500)
+      .json({ message: "Failed to check entry ownership!", entryError });
+  }
+
+  if (!entryData || entryData.user_id !== loggedInUserId) {
+    return res.status(403).json({ message: "Unauthorized to edit entry!" });
+  }
+
+  // 2. Proceed with update logic if ownership is confirmed
   const { data, error } = await supabase
     .from("journal_entries")
     .update({ entry_content })
