@@ -272,7 +272,7 @@ app.get("/api/journal/entries", verifySession, async (req, res) => {
   const { data: userData, error: userError } = await supabase
     .from("users")
     .select("*")
-    .eq("user_id", userId);
+    .eq("user_id", user_id);
 
   if (userError) {
     return res
@@ -288,7 +288,7 @@ app.get("/api/journal/entries", verifySession, async (req, res) => {
   const { data: entries, error } = await supabase
     .from("journal_entries")
     .select("*")
-    .eq("user_id", userId);
+    .eq("user_id", user_id);
 
   if (error)
     return res
@@ -333,8 +333,7 @@ app.post(
     const { habitId } = req.params;
     const progress_date = new Date().toISOString(); // Assuming date is sent in the request body
 
-    // User ID can be retrieved from session/JWT (ensure user owns the habit)
-    const { user_id } = req.user.id;
+    const user_id = req.user.id;
 
     // Check if habit belongs to the user
     const { data: habitData, error: habitError } = await supabase
@@ -405,8 +404,8 @@ app.post(
 );
 
 //Get all habits progressions for a user
-app.get("/api/habits/progression/:userId", verifySession, async (req, res) => {
-  const { userId } = req.user.id;
+app.get("/api/habits/progression", verifySession, async (req, res) => {
+  const userId = req.user.id;
 
   // 1. Fetch all habits for the user
   const { data: habits, error } = await supabase

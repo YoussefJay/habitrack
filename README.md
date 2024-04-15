@@ -95,10 +95,8 @@ Here's an overview of the endpoints:
   - Response:
     - On success: Status code 201 with a message indicating successful habit completion.
     - On failure: Status code 401 (unauthorized) or 404 (habit not found) or 500 with an error message.
-- **GET /api/habits/progression/:userID** (requires authentication)
-  - Retrieves habit progression data for a specific user identified by their user ID.
-  - Path Parameter:
-    - `:userID` (string): The ID of the habit.
+- **GET /api/habits/progression/** (requires authentication)
+  - Retrieves habit progression data for the authenticated user.
   - Response:
     - On success: Status code 200 with a message indicating successful habit completion and an object containing habit progression data for each habit of the user.
     - On failure: Status code 401 (unauthorized) or 500 with an error message.
