@@ -41,7 +41,7 @@ Here's an overview of the endpoints:
   - Response:
     - On success: Status code 201 with a message and the newly created habit object.
     - On failure: Status code 401 (unauthorized) or 500 with an error message.
-- **PATCH /api/habits/edit/:habitId** (requires authentication)
+- **PUT /api/habits/edit/:habitId** (requires authentication)
   - Updates an existing habit for the authenticated user.
   - Path Parameter:
     - `:habitId` (string): The ID of the habit.
@@ -58,6 +58,34 @@ Here's an overview of the endpoints:
     - On success: Status code 200 with a message.
     - On failure: Status code 401 (unauthorized) or 404 (habit not found) or 500 with an error message.
 
+**Journal entries:**
+
+- **POST /api/journal/add** (requires authentication)
+
+  - Creates a new journal entry for the authenticated user.
+  - Request Body:
+    - `entry_content` (string): The content of the new journal entry.
+  - Response:
+    - On success: Status code 201 with a message indicating successful creation of the journal entry.
+    - On failure: Status code 401 (unauthorized) or 500 with an error message.
+
+- **GET /api/journal/entries** (requires authentication)
+
+  - Retrieves all journal entries for the authenticated user.
+  - Response:
+    - On success: Status code 200 with a message indicating indicating successful retrieval of journal entries and an array of journal entry objects for the user. Each object contains details about the entry.
+    - On failure: Status code 401 (unauthorized) or 500 with an error message.
+
+- **PUT /api/journal/edit/:entryId** (requires authentication)
+  - Updates an existing journal entry for the authenticated user.
+  - Path Parameter:
+    - `:entryId` (string): The ID of the journal entry to update.
+  - Request Body:
+    - `entry_content` (string): The updated content for the journal entry.
+  - Response:
+    - On success: Status code 200 with a message indicating successful update of the journal entry and the updated journal entry object with its details.
+    - On failure: Status code 401 (unauthorized) or 500 with an error message.
+
 **Habit Progression:**
 
 - **POST /api/habits/progression/:habitId** (requires authentication)
@@ -67,6 +95,13 @@ Here's an overview of the endpoints:
   - Response:
     - On success: Status code 201 with a message indicating successful habit completion.
     - On failure: Status code 401 (unauthorized) or 404 (habit not found) or 500 with an error message.
+- **GET /api/habits/progression/:userID** (requires authentication)
+  - Retrieves habit progression data for a specific user identified by their user ID.
+  - Path Parameter:
+    - `:userID` (string): The ID of the habit.
+  - Response:
+    - On success: Status code 200 with a message indicating successful habit completion and an object containing habit progression data for each habit of the user.
+    - On failure: Status code 401 (unauthorized) or 500 with an error message.
 
 **Additional Notes:**
 
